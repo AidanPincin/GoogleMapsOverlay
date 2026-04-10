@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location Tracking with Google Maps</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -31,6 +32,11 @@
       button:hover {
         background: #3a73dd;
       }
+      #status {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #333;
+      }
       #map {
         margin-top: 1.5rem;
         width: 100%;
@@ -42,6 +48,10 @@
   </head>
   <body>
     <main>
+      <h1>Location Tracking</h1>
+      <p>Click the button to start sending your device location to the map. The marker updates as your position changes.</p>
+      <button id="trackButton">Start tracking location</button>
+      <p id="status">Location tracking is stopped.</p>
       <div id="map">Loading map…</div>
     </main>
     <script src="script.js"></script>
@@ -54,15 +64,15 @@
           return;
         }
 
-        const map = new google.maps.Map(mapElement, {
+        window.map = new google.maps.Map(mapElement, {
           center: { lat: 37.7749, lng: -122.4194 },
           zoom: 12,
         });
 
-        new google.maps.Marker({
+        window.locationMarker = new google.maps.Marker({
           position: { lat: 37.7749, lng: -122.4194 },
-          map: map,
-          title: 'San Francisco',
+          map: window.map,
+          title: 'Current position',
         });
       }
     </script>
