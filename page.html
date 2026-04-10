@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background: #f7f8fb;
+        color: #111;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.75rem 1.2rem;
+        border: none;
+        border-radius: 8px;
+        background: #4c8dff;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #3a73dd;
+      }
+      #map {
+        margin-top: 1.5rem;
+        width: 100%;
+        height: 400px;
+        border-radius: 12px;
+        background: #e5e5e5;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="map">Loading map…</div>
+    </main>
+    <script src="script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6YvacaWUo5m0EkcBmRBaJIa25YGyAlf0&callback=initMap"></script>
+    <script>
+      function initMap() {
+        const mapElement = document.getElementById('map');
+        if (!mapElement) {
+          console.error('Map container not found.');
+          return;
+        }
+
+        const map = new google.maps.Map(mapElement, {
+          center: { lat: 37.7749, lng: -122.4194 },
+          zoom: 12,
+        });
+
+        new google.maps.Marker({
+          position: { lat: 37.7749, lng: -122.4194 },
+          map: map,
+          title: 'San Francisco',
+        });
+      }
+    </script>
+  </body>
+</html>
