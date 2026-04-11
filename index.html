@@ -32,6 +32,33 @@
       button:hover {
         background: #3a73dd;
       }
+      .search-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .search-row input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid #c8d1dd;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+      .clear-button {
+        display: none;
+        width: 2.5rem;
+        border-radius: 8px;
+        background: #f1f3f5;
+        color: #333;
+        border: 1px solid #c8d1dd;
+        font-size: 1.2rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+      .clear-button:hover {
+        background: #e2e6ea;
+      }
+
       #status {
         margin-top: 1rem;
         font-size: 0.95rem;
@@ -51,11 +78,17 @@
       <h1>Location Tracking</h1>
       <p>Click the button to start sending your device location to the map. The marker updates as your position changes.</p>
       <button id="trackButton">Start tracking location</button>
+      <button id="centerButton" disabled>Center map on my location</button>
+      <button id="overlayButton" disabled>Show township property lines</button>
+      <div class="search-row">
+        <input id="addressInput" type="text" placeholder="Enter an address, city, or place" />
+        <button id="clearAddressButton" class="clear-button" type="button" aria-label="Clear address input">×</button>
+      </div>
       <p id="status">Location tracking is stopped.</p>
       <div id="map">Loading map…</div>
     </main>
     <script src="script.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6YvacaWUo5m0EkcBmRBaJIa25YGyAlf0&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6YvacaWUo5m0EkcBmRBaJIa25YGyAlf0&libraries=places&callback=initMap"></script>
     <script>
       function initMap() {
         const mapElement = document.getElementById('map');
@@ -69,11 +102,22 @@
           zoom: 12,
         });
 
+        const overlayButton = document.getElementById('overlayButton');
+        if (overlayButton) {
+          overlayButton.disabled = false;
+        }
+
+        window.geocoder = new google.maps.Geocoder();
+
         window.locationMarker = new google.maps.Marker({
           position: { lat: 37.7749, lng: -122.4194 },
           map: window.map,
           title: 'Current position',
         });
+
+        if (typeof window.initAutocomplete === 'function') {
+          window.initAutocomplete();
+        }
       }
     </script>
   </body>
